@@ -1,0 +1,12 @@
+[user]
+    name = example_name
+    email = example@example.co.jp
+[color]
+    status = auto
+    branch = auto
+    interactive = auto
+    diff = auto
+[alias]
+    count = !git log --pretty=oneline | wc -l
+[core]
+    autoCRLF = false

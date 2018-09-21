@@ -1,0 +1,10 @@
+(global-company-mode 1)
+(setq company-idle-delay 0)
+(setq company-minimum-prefix-length 2)
+(setq company-selection-wrap-around t)
+
+(bind-key "M-n" nil company-active-map)
+(bind-key "M-p" nil company-active-map)
+(bind-key "C-n" 'company-select-next company-active-map)
+(bind-key "C-p" 'company-select-previous company-active-map)
+(bind-key "C-h" nil company-active-map)

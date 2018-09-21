@@ -1,0 +1,5 @@
+#contributor : Andrew Gwozdziewycz <web@apgwoz.com>
+#name : var_dump(...)
+#echo'<pre align="left">';var_dump(${expression[, mixed expression]});echo'</pre>';exit;
+# --
+echo'<pre align="left">';var_dump(__FUNCTION__.'_'.__LINE__,${$this->request->data});echo'</pre>';exit;

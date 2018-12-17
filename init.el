@@ -79,6 +79,8 @@
 ;; 指定したディレクトリ以下の文字を検索
 (el-get-bundle moccur-edit)
 ;; (el-get-bundle minimap)
+;; バッファの表示内容をWebブラウザで表示
+(el-get-bundle htmlize)
 
 ;; エラーを自動で検出してくれるプラグイン
 ;;(el-get-bundle flycheck)

@@ -11,6 +11,29 @@
 (setq file-name-coding-system 'utf-8)
 (set-default-coding-systems 'utf-8)
 
+;; ;; set font
+;; set font
+(let ((ws window-system))
+  (cond ((eq ws 'w32) ; windows
+         (set-face-attribute 'default nil :family "Ricty Diminished" :height 110)
+         (set-fontset-font nil 'japanese-jisx0208 (font-spec :family "Ricty Diminished")))
+        ((eq ws 'ns) ; mac
+         (set-face-attribute 'default nil :family "Ricty Diminished" :height 110)
+         (set-fontset-font nil 'japanese-jisx0208 (font-spec :family "Ricty Diminished")))))
+
+;; ;;; CamingoCode + Ricty Diminished
+;; (create-fontset-from-ascii-font "CamingoCode:size=13:weight=normal:slant=normal"
+;;                                 nil
+;;                                 "CamingoCode_RictyDiminished")
+;; (set-fontset-font "fontset-CamingoCode_RictyDiminished"
+;;                   'unicode
+;;                   (font-spec
+;;                    :family "Ricty Diminished"
+;;                    :size 14)
+;;                   nil
+;;                   'append)
+;; ;;; 上記で作成したフォントセットをデフォルトに設定する.
+;; (add-to-list 'default-frame-alist '(font . "fontset-CamingoCode_RictyDiminished"))
 
 ;; color theme
 ;; (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
@@ -23,6 +46,24 @@
 
 ;; メニューバーを非表示
 (menu-bar-mode -1)
+
+;; ewwで画像を非表示にする
+(defun eww-disable-images ()
+  "eww で画像表示させない"
+  (interactive)
+  (setq-local shr-put-image-function 'shr-put-image-alt)
+  (eww-reload))
+(defun eww-enable-images ()
+  "eww で画像表示させる"
+  (interactive)
+  (setq-local shr-put-image-function 'shr-put-image)
+  (eww-reload))
+(defun shr-put-image-alt (spec alt &optional flags)
+  (insert alt))
+;;はじめから非表示
+(defun eww-mode-hook--disable-image ()
+  (setq-local shr-put-image-function 'shr-put-image-alt))
+(add-hook 'eww-mode-hook 'eww-mode-hook--disable-image)
 
 ;; 対応する括弧を光らせる
 (show-paren-mode 1)
@@ -41,6 +82,12 @@
 
 ;; インデントとタブの設定
 (setq c-tab-always-indent nil)
+;; indent width 4
+(setq-default c-basic-offset 4)
+;; tab width 2
+(setq-default tab-width 4)
+;; タブの無効化
+(setq-default indent-tabs-mode nil)
 
 ;; 閉じ括弧などを自動入力
 (electric-pair-mode 1)
@@ -92,3 +139,27 @@
   (interactive "nAlpha: ")
   (set-frame-parameter nil 'alpha (cons alpha-num '(90))))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 文字コード
+;;  機種依存文字例：～①㈱©
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(require 'cp5022x)
+;; 各種文字コード設定
+(set-default-coding-systems 'utf-8-emacs)
+(setq default-file-name-coding-system 'utf-8-emacs)
+;; charset と coding-system の優先度設定
+(set-charset-priority 'ascii
+                      'japanese-jisx0208
+                      'latin-jisx0201
+                      'katakana-jisx0201
+                      'iso-8859-1
+                      'cp1252
+                      'unicode)
+(set-coding-system-priority 'utf-8
+                            'euc-jp
+                            'iso-2022-jp
+                            'cp932)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
